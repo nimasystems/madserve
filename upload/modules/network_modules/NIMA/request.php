@@ -1,21 +1,21 @@
 <?php
 class NIMA implements networkmodule {
 	public function request($request_type, $request_info, $network_ids, $backfill) {
-		 
+			
 		/*F:START*/
-		 
+			
 		error_reporting(0); /*Catch XML Exceptions*/
-		 
+			
 		global $zone_detail;
-		 
+			
 		$httpConfig['method']     = 'POST';
 		$httpConfig['timeout']    = 1;
 		$httpConfig['special']     = 'INMOBI';
 		$httpConfig['inmobisiteid']     = $network_ids['p_1'];
-	 	
+		 
 		$http = new Http();
 		$http->initialize($httpConfig);
-		 
+			
 		if ($request_type=='banner' or $request_type=='interstitial'){
 			$request_url='http://madserve.dev.bgmiracle.com/nimatest.php';
 			$http->addParam('mk-siteid'   , $network_ids['p_1']);
@@ -95,15 +95,20 @@ class NIMA implements networkmodule {
 			return false;
 		}
 
-
+		$tempad['url'] = 'http://www.nimasystems.com';
+		$tempad['markup'] = '<html><body>this is a <b style="color:red">test</b> string</body></html>';
+		
+/*
 		if (isset($xml_response->Ads->Ad['type'])) {
 			$tempad['type']=$xml_response->Ads->Ad['type'];
 		} else {$tempad['type']='';
 		}
+		
 		if (isset($xml_response->Ads->Ad)) {
 			$tempad['markup']=$xml_response->Ads->Ad;
 		} else {$tempad['markup']='';
 		}
+		
 		if (isset($xml_response->Ads->Ad->AdURL)) {
 			$tempad['url']=$xml_response->Ads->Ad->AdURL;
 		} else {$tempad['url']='';
@@ -111,7 +116,7 @@ class NIMA implements networkmodule {
 
 		if ($tempad['url']=='null' or $tempad['url']==''){
 			return false;
-		}
+		}*/
 
 		if ($request_type=='banner'){
 
