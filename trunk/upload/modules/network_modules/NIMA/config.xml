@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<?xml-stylesheet type="text/xsl" href=""?>
+
+<networkplugin>
+    <name>Nima</name>
+    <version>1.0</version>
+    <networkid>NIMA</networkid>
+    <signuplink>http://www.nimasystems.com/</signuplink>
+    <info_content><![CDATA[
+        Sample description
+    ]]></info_content>
+    <banner_support>1</banner_support>
+    <interstitial_support>1</interstitial_support>
+	<pub_ids>
+	<pubid>Site ID</pubid>
+	</pub_ids>
+</networkplugin>
