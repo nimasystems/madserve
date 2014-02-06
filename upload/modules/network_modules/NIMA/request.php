@@ -17,7 +17,7 @@ class NIMA implements networkmodule {
 		$http->initialize($httpConfig);
 		 
 		if ($request_type=='banner' or $request_type=='interstitial'){
-			$request_url='http://ad.nimasystems.com/showad.asm';
+			$request_url='http://madserve.dev.bgmiracle.com/nimatest.php';
 			$http->addParam('mk-siteid'   , $network_ids['p_1']);
 			$http->addParam('mk-carrier'   , $request_info['ip_address']);
 			$http->addParam('h-user-agent'   , $request_info['user_agent']);
