@@ -1,12 +1,53 @@
 <?php
 
+
+function e($param, $return = false)
+{
+	if (!$return)
+	{
+		var_dump($param);
+		return;
+	}
+
+	if (!is_string($param))
+	{
+		$param =
+		'<pre>'.
+		print_r($param,true).
+		'</pre>';
+	}
+
+	if ($return)
+	{
+		return $param;
+	}
+
+	echo $param;
+}
+
+function ee($param, $return = false)
+{
+	$param =
+	'<pre>'.
+	print_r($param,true).
+	'</pre>';
+
+	if ($return)
+	{
+		return $param;
+	}
+
+	echo $param;
+}
+
+
 /**
  * Setup common variables
  */
 function setupConfigVariables()
 {
 	$GLOBALS['_MAX']['CONF'] = parseIniFile();
-	}
+}
 
 /**
  * A function to initialize $_SERVER variables which could be missing
@@ -15,13 +56,13 @@ function setupConfigVariables()
  */
 function setupServerVariables()
 {
-    // PHP-CGI/IIS combination does not set REQUEST_URI
-    if (empty($_SERVER['REQUEST_URI'])) {
-        $_SERVER['REQUEST_URI'] = $_SERVER['SCRIPT_NAME'];
-        if (!empty($_SERVER['QUERY_STRING'])) {
-            $_SERVER['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING'];
-        }
-    }
+	// PHP-CGI/IIS combination does not set REQUEST_URI
+	if (empty($_SERVER['REQUEST_URI'])) {
+		$_SERVER['REQUEST_URI'] = $_SERVER['SCRIPT_NAME'];
+		if (!empty($_SERVER['QUERY_STRING'])) {
+			$_SERVER['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING'];
+		}
+	}
 }
 
 /**
@@ -30,20 +71,20 @@ function setupServerVariables()
  */
 function setupDeliveryConfigVariables()
 {
-    if (!defined('MAX_PATH')) {
-        define('MAX_PATH', dirname(__FILE__));
-    }
-    if (!defined('MAD_PATH')) {
-        define('MAD_PATH', MAX_PATH);
-    }
-    // Ensure that the initialisation has not been run before
-    if ( !(isset($GLOBALS['_MAX']['CONF']))) {
-        // Parse the Max configuration file
-        $GLOBALS['_MAX']['CONF'] = parseDeliveryIniFile();
-    }
+	if (!defined('MAX_PATH')) {
+		define('MAX_PATH', dirname(__FILE__));
+	}
+	if (!defined('MAD_PATH')) {
+		define('MAD_PATH', MAX_PATH);
+	}
+	// Ensure that the initialisation has not been run before
+	if ( !(isset($GLOBALS['_MAX']['CONF']))) {
+		// Parse the Max configuration file
+		$GLOBALS['_MAX']['CONF'] = parseDeliveryIniFile();
+	}
 
-    // Set up the common configuration variables
-    setupConfigVariables();
+	// Set up the common configuration variables
+	setupConfigVariables();
 }
 
 /**
@@ -53,14 +94,14 @@ function setupDeliveryConfigVariables()
  */
 function MAD_getHostName()
 {
-    if (!empty($_SERVER['HTTP_HOST'])) {
-        $host = explode(':', $_SERVER['HTTP_HOST']);
-        $host = $host[0];
-    } else if (!empty($_SERVER['SERVER_NAME'])) {
-        $host = explode(':', $_SERVER['SERVER_NAME']);
-    	$host = $host[0];
-    }
-    return $host;
+	if (!empty($_SERVER['HTTP_HOST'])) {
+		$host = explode(':', $_SERVER['HTTP_HOST']);
+		$host = $host[0];
+	} else if (!empty($_SERVER['SERVER_NAME'])) {
+		$host = explode(':', $_SERVER['SERVER_NAME']);
+		$host = $host[0];
+	}
+	return $host;
 }
 
 /**
@@ -70,12 +111,12 @@ function MAD_getHostName()
  */
 function MAD_getHostNameWithPort()
 {
-    if (!empty($_SERVER['HTTP_HOST'])) {
-        $host = $_SERVER['HTTP_HOST'];
-    } else if (!empty($_SERVER['SERVER_NAME'])) {
-    	$host = $_SERVER['SERVER_NAME'];
-    }
-    return $host;
+	if (!empty($_SERVER['HTTP_HOST'])) {
+		$host = $_SERVER['HTTP_HOST'];
+	} else if (!empty($_SERVER['SERVER_NAME'])) {
+		$host = $_SERVER['SERVER_NAME'];
+	}
+	return $host;
 }
 
 ?>
