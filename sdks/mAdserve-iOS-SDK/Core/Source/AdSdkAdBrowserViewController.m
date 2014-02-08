@@ -103,7 +103,12 @@
 - (void)viewDidLoad 
 {
     [super viewDidLoad];
+    
 	[self loadURL:_url];
+}
+
+- (BOOL)prefersStatusBarHidden {
+    return YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated

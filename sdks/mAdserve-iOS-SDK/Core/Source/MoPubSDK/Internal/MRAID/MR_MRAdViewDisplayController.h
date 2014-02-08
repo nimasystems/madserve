@@ -51,6 +51,7 @@
 - (void)rotateToOrientation:(UIInterfaceOrientation)newOrientation;
 - (void)revertViewToDefaultState;
 - (void)close;
+- (void)closeButtonPressed;
 - (void)expandToFrame:(CGRect)frame withURL:(NSURL *)url 
        useCustomClose:(BOOL)shouldUseCustomClose isModal:(BOOL)isModal 
 shouldLockOrientation:(BOOL)shouldLockOrientation;

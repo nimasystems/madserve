@@ -80,7 +80,7 @@
 	DTXMLElement *newChild = [[DTXMLElement alloc] initWithName:childName];
 	if (childText)
 	{
-		newChild.text = [NSString stringWithString:childText];
+		newChild.text = [NSMutableString stringWithString:childText];
 	}
 	newChild.parent = self;
 	[self.children addObject:newChild];

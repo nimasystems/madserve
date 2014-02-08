@@ -147,7 +147,7 @@
 @end
 
 @interface MP_MPTimerTarget ()
-- (void)postNotification;
+
 @end
 
 @implementation MP_MPTimerTarget

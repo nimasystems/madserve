@@ -407,7 +407,7 @@ static NSArray *BROWSER_SCHEMES, *SPECIAL_HOSTS;
 {
 	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
 	CGContextRef context = CGBitmapContextCreate(nil,27,27,8,0,
-												 colorSpace,kCGImageAlphaPremultipliedLast);
+												 colorSpace,kCGBitmapAlphaInfoMask);
 	CFRelease(colorSpace);
 	return context;
 }

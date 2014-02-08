@@ -17,8 +17,8 @@
 #define kDefaultLocationPrecision 6
 
 static NSString * const kAdAnimationId = @"MPAdTransition";
-static NSString * const kOldContentViewKey = @"OldContentView";
-static NSString * const kNewContentViewKey = @"NewContentView";
+//static NSString * const kOldContentViewKey = @"OldContentView";
+//static NSString * const kNewContentViewKey = @"NewContentView";
 
 @interface MP_MPAdView ()
 

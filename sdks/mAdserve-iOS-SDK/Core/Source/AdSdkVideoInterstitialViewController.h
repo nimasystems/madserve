@@ -66,8 +66,10 @@ typedef enum {
 
 @property (nonatomic, readonly, getter=isAdvertLoaded) BOOL advertLoaded;
 @property (nonatomic, readonly, getter=isAdvertViewActionInProgress) BOOL advertViewActionInProgress;
-
+@property (nonatomic, assign) UIViewController *interstitialViewController;
 @property (nonatomic, assign) BOOL locationAwareAdverts;
+@property (nonatomic, assign) UIViewController *videoViewController;
+@property (nonatomic, assign) UIViewController *viewController;
 
 @property (nonatomic, strong) NSString *requestURL;
 

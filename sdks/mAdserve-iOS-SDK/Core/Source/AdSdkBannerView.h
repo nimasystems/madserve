@@ -70,6 +70,8 @@ enum {
 
 - (void)requestAd;
 
+- (void)setRefreshTimerActive:(BOOL)active;
+
 - (void)requestDemoBannerImageAdvert; 
 - (void)requestDemoBannerTextAdvert;
 - (void)requestDemoBannerTextSkipOverlayInAppAdvert;

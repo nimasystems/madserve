@@ -53,6 +53,10 @@
     return YES;
 }
 
+- (BOOL)prefersStatusBarHidden {
+    return YES;
+}
+
 - (NSUInteger)supportedInterfaceOrientations{
     UIApplication *app = [UIApplication sharedApplication];
     [app setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
