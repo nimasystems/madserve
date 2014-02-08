@@ -99,8 +99,8 @@ class NIMA implements networkmodule {
 			$tempad['url'] = 'http://www.nimasystems.com';
 			$tempad['type'] = 'banner';
 			$tempad['markup'] = (rand(1, 2) == 2 ?
-					'<html><body>this is a <b style="color:red">test</b> string</body></html>' :
-					'<html><body>HOORAYY!</body></html>'
+					'<html><body style="height:100%;background-color:green">this is a <b style="color:red">test</b> string</body></html>' :
+					'<html><body style="height:100%;background-color:green">HOORAYY!</body></html>'
 			);
 				
 			/*<?xml version="1.0" encoding="UTF-8" ?>
@@ -113,8 +113,8 @@ class NIMA implements networkmodule {
 			$tempad['type'] = 'banner';
 			$tempad['interstitial-type'] = 'url';
 			$tempad['markup'] = (rand(1, 2) == 2 ?
-					'<html><body>this is a <b style="color:red">test</b> string</body></html>' :
-					'<html><body>HOORAYY!</body></html>'
+					'<html><body style="height:100%;background-color:green">this is a <b style="color:red">test</b> string</body></html>' :
+					'<html><body style="height:100%;background-color:green">HOORAYY!</body></html>'
 			);
 			$tempad['markup'] = 'http://www.abv.bg';
 			
