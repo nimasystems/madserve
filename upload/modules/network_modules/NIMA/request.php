@@ -102,6 +102,8 @@ class NIMA implements networkmodule {
 					'<html><body style="height:100%;background-color:green">this is a <b style="color:red">test</b> string</body></html>' :
 					'<html><body style="height:100%;background-color:green">HOORAYY!</body></html>'
 			);
+			
+			$tempad['markup'] = file_get_contents('http://madserve.dev.bgmiracle.com/data/creative/grabo/banner_hx50.html');
 				
 			/*<?xml version="1.0" encoding="UTF-8" ?>
 			 <request type="textAd"><htmlString skipoverlaybutton="0"><![CDATA[<html><body>HOORAYY!</body></html>]]></htmlString><clicktype>inapp</clicktype><clickurl><![CDATA[http://madserve.localhost/md.click.php?zone_id=3&h=1a1e8dcabe648ae330b28b919838edac&type=network&campaign_id=1&network_id=32&c=aHR0cDovL3d3dy5uaW1hc3lzdGVtcy5jb20,]]></clickurl><urltype>link</urltype><refresh>30</refresh><scale>no</scale><skippreflight>yes</skippreflight></request>*/
@@ -114,7 +116,7 @@ class NIMA implements networkmodule {
 			$tempad['interstitial-type'] = 'url';
 			$tempad['markup'] = (rand(1, 2) == 2 ?
 					'<html><body style="height:100%;background-color:green">this is a <b style="color:red">test</b> string</body></html>' :
-					'<html><body style="height:100%;background-color:green">HOORAYY!</body></html>'
+					'<html><body style="height:100%;background-color:green">HOORAYY INTERSTITIAL!</body></html>'
 			);
 			$tempad['markup'] = 'http://www.abv.bg';
 			
