@@ -1,5 +1,5 @@
 
-
+#import "defines.h"
 #import <UIKit/UIKit.h>
 
 enum {
@@ -70,6 +70,10 @@ typedef enum {
 @property (nonatomic, assign) BOOL locationAwareAdverts;
 @property (nonatomic, assign) UIViewController *videoViewController;
 @property (nonatomic, assign) UIViewController *viewController;
+
+@property (nonatomic, assign) AdGender gender;
+
+@property (nonatomic, copy) NSDate *birthDate;
 
 @property (nonatomic, strong) NSString *requestURL;
 

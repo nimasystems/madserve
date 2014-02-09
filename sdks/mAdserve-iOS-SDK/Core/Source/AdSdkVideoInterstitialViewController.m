@@ -174,6 +174,9 @@ NSString * const AdSdkVideoInterstitialErrorDomain = @"AdSdkVideoInterstitial";
 @synthesize videoViewController;
 @synthesize viewController;
 
+@synthesize gender;
+@synthesize birthDate;
+
 static float animationDuration = 0.50;
 
 #pragma mark - Init/Dealloc Methods
@@ -527,9 +530,9 @@ static float animationDuration = 0.50;
 
 #pragma mark - Location
 
-- (void)setLocationWithLatitude:(CGFloat)latitude longitude:(CGFloat)longitude {
-    self.currentLatitude = latitude;
-    self.currentLongitude = longitude;
+- (void)setLocationWithLatitude:(CGFloat)latitude_ longitude:(CGFloat)longitude_ {
+    self.currentLatitude = latitude_;
+    self.currentLongitude = longitude_;
 }
 
 #pragma mark - Ad Request
@@ -569,6 +572,20 @@ static float animationDuration = 0.50;
     
 }
 
+- (NSString*)birthDateToString {
+    
+    if (!self.birthDate) {
+        return nil;
+    }
+    
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyy-d-M";
+	
+    NSString *dt = [formatter stringFromDate:birthDate];
+    
+    return dt;
+}
+
 - (void)asyncRequestAdWithPublisherId:(NSString *)publisherId
 {
 	@autoreleasepool
@@ -590,6 +607,8 @@ static float animationDuration = 0.50;
         
         NSString *timestamp = [NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]];
         
+        NSString *bstr = [self birthDateToString];
+        
         NSString *requestString;
         
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 60000
@@ -610,7 +629,7 @@ static float animationDuration = 0.50;
                 NSString *latitudeString = [NSString stringWithFormat:@"%+.6f", self.currentLatitude];
                 NSString *longitudeString = [NSString stringWithFormat:@"%+.6f", self.currentLongitude];
                 
-                requestString=[NSString stringWithFormat:@"c.mraid=%@&o_iosadvidlimit=%@&u=%@&u_wv=%@&u_br=%@&v=%@&s=%@&iphone_osversion=%@&o_iosadvid=%@&rt=%@&t=%@&i=%@&lon=%@&lat=%@",
+                requestString=[NSString stringWithFormat:@"c.mraid=%@&o_iosadvidlimit=%@&u=%@&u_wv=%@&u_br=%@&v=%@&s=%@&iphone_osversion=%@&o_iosadvid=%@&rt=%@&t=%@&i=%@&lon=%@&lat=%@&pg=%d&pb=%@",
                                [mRaidCapable stringByUrlEncoding],
                                [o_iosadvidlimit stringByUrlEncoding],
                                [self.userAgent stringByUrlEncoding],
@@ -624,11 +643,13 @@ static float animationDuration = 0.50;
                                [timestamp stringByUrlEncoding],
                                [self.IPAddress stringByUrlEncoding],
                                [longitudeString stringByUrlEncoding],
-                               [latitudeString stringByUrlEncoding]];
+                               [latitudeString stringByUrlEncoding],
+                               gender,
+                               (bstr ? [bstr stringByUrlEncoding] : @"")];
                 
             } else {
                 
-                requestString=[NSString stringWithFormat:@"c.mraid=%@&o_iosadvidlimit=%@&u=%@&u_wv=%@&u_br=%@&v=%@&s=%@&iphone_osversion=%@&o_iosadvid=%@&rt=%@&t=%@&i=%@",
+                requestString=[NSString stringWithFormat:@"c.mraid=%@&o_iosadvidlimit=%@&u=%@&u_wv=%@&u_br=%@&v=%@&s=%@&iphone_osversion=%@&o_iosadvid=%@&rt=%@&t=%@&i=%@&pg=%d&pb=%@",
                                [mRaidCapable stringByUrlEncoding],
                                [o_iosadvidlimit stringByUrlEncoding],
                                [self.userAgent stringByUrlEncoding],
@@ -640,7 +661,9 @@ static float animationDuration = 0.50;
                                [iosadvid stringByUrlEncoding],
                                [requestType stringByUrlEncoding],
                                [timestamp stringByUrlEncoding],
-                               [self.IPAddress stringByUrlEncoding]];
+                               [self.IPAddress stringByUrlEncoding],
+                               gender,
+                               (bstr ? [bstr stringByUrlEncoding] : @"")];
                 
             }
             
@@ -651,7 +674,7 @@ static float animationDuration = 0.50;
                 NSString *latitudeString = [NSString stringWithFormat:@"%+.6f", self.currentLatitude];
                 NSString *longitudeString = [NSString stringWithFormat:@"%+.6f", self.currentLongitude];
                 
-                requestString=[NSString stringWithFormat:@"c.mraid=%@&u=%@&u_wv=%@&u_br=%@&v=%@&s=%@&iphone_osversion=%@&rt=%@&t=%@&i=%@&lon=%@&lat=%@",
+                requestString=[NSString stringWithFormat:@"c.mraid=%@&u=%@&u_wv=%@&u_br=%@&v=%@&s=%@&iphone_osversion=%@&rt=%@&t=%@&i=%@&lon=%@&lat=%@&pg=%d&pb=%@",
                                [mRaidCapable stringByUrlEncoding],
                                [self.userAgent stringByUrlEncoding],
                                [self.userAgent stringByUrlEncoding],
@@ -663,11 +686,13 @@ static float animationDuration = 0.50;
                                [timestamp stringByUrlEncoding],
                                [self.IPAddress stringByUrlEncoding],
                                [longitudeString stringByUrlEncoding],
-                               [latitudeString stringByUrlEncoding]];
+                               [latitudeString stringByUrlEncoding],
+                               gender,
+                               (bstr ? [bstr stringByUrlEncoding] : @"")];
                 
             } else {
                 
-                requestString=[NSString stringWithFormat:@"c.mraid=%@&u=%@&u_wv=%@&u_br=%@&v=%@&s=%@&iphone_osversion=%@&rt=%@&t=%@&i=%@",
+                requestString=[NSString stringWithFormat:@"c.mraid=%@&u=%@&u_wv=%@&u_br=%@&v=%@&s=%@&iphone_osversion=%@&rt=%@&t=%@&i=%@&pg=%d&pb=%@",
                                [mRaidCapable stringByUrlEncoding],
                                [self.userAgent stringByUrlEncoding],
                                [self.userAgent stringByUrlEncoding],
@@ -677,7 +702,9 @@ static float animationDuration = 0.50;
                                [osVersion stringByUrlEncoding],
                                [requestType stringByUrlEncoding],
                                [timestamp stringByUrlEncoding],
-                               [self.IPAddress stringByUrlEncoding]];
+                               [self.IPAddress stringByUrlEncoding],
+                               gender,
+                               (bstr ? [bstr stringByUrlEncoding] : @"")];
             }
             
         }
@@ -688,7 +715,7 @@ static float animationDuration = 0.50;
             NSString *latitudeString = [NSString stringWithFormat:@"%+.6f", self.currentLatitude];
             NSString *longitudeString = [NSString stringWithFormat:@"%+.6f", self.currentLongitude];
             
-            requestString=[NSString stringWithFormat:@"c.mraid=%@&u=%@&u_wv=%@&u_br=%@&v=%@&s=%@&iphone_osversion=%@&rt=%@&t=%@&i=%@&lon=%@&lat=%@",
+            requestString=[NSString stringWithFormat:@"c.mraid=%@&u=%@&u_wv=%@&u_br=%@&v=%@&s=%@&iphone_osversion=%@&rt=%@&t=%@&i=%@&lon=%@&lat=%@&pg=%d&pb=%@",
                            [mRaidCapable stringByUrlEncoding],
                            [self.userAgent stringByUrlEncoding],
                            [self.userAgent stringByUrlEncoding],
@@ -700,11 +727,13 @@ static float animationDuration = 0.50;
                            [timestamp stringByUrlEncoding],
                            [self.IPAddress stringByUrlEncoding],
                            [longitudeString stringByUrlEncoding],
-                           [latitudeString stringByUrlEncoding]];
+                           [latitudeString stringByUrlEncoding],
+                           gender,
+                           (bstr ? [bstr stringByUrlEncoding] : @"")];
             
         } else {
             
-            requestString=[NSString stringWithFormat:@"c.mraid=%@&u=%@&u_wv=%@&u_br=%@&v=%@&s=%@&iphone_osversion=%@&rt=%@&t=%@&i=%@",
+            requestString=[NSString stringWithFormat:@"c.mraid=%@&u=%@&u_wv=%@&u_br=%@&v=%@&s=%@&iphone_osversion=%@&rt=%@&t=%@&i=%@&pg=%d&pb=%@",
                            [mRaidCapable stringByUrlEncoding],
                            [self.userAgent stringByUrlEncoding],
                            [self.userAgent stringByUrlEncoding],
@@ -714,7 +743,9 @@ static float animationDuration = 0.50;
                            [osVersion stringByUrlEncoding],
                            [requestType stringByUrlEncoding],
                            [timestamp stringByUrlEncoding],
-                           [self.IPAddress stringByUrlEncoding]];
+                           [self.IPAddress stringByUrlEncoding],
+                           gender,
+                           (bstr ? [bstr stringByUrlEncoding] : @"")];
         }
         
 #endif
@@ -2264,14 +2295,13 @@ static float animationDuration = 0.50;
     self.view.hidden = YES;
     self.view.alpha = 0.0;
     
-    if ([delegate respondsToSelector:@selector(adsdkVideoInterstitialViewDidDismissScreen:)])
-    {
-        [delegate adsdkVideoInterstitialViewDidDismissScreen:self];
-    }
-    
     self.advertViewActionInProgress = NO;
     self.advertLoaded = NO;
     
+    if ([delegate respondsToSelector:@selector(adsdkVideoInterstitialViewDidDismissScreen:)])
+    {
+        [delegate adsdkVideoInterstitialViewDidDismissScreen:self];
+    } 
 }
 
 - (void)advertAnimateOut:(NSString*)animationType advertTypeLoaded:(AdSdkAdType)advertType viewToAnimate:(UIView*)viewToAnimate {
@@ -2869,7 +2899,6 @@ static float animationDuration = 0.50;
             [self.videoPlayer.view bringSubviewToFront:videoSkipButton];
         }
     }
-    
 }
 
 - (void)updateVideoTimerLabel:(NSTimeInterval)progress {

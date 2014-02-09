@@ -29,6 +29,9 @@ NSString * const AdSdkErrorDomain = @"AdSdk";
 
 @property (nonatomic, strong) NSMutableDictionary *browserUserAgentDict;
 
+@property (nonatomic, assign) CGFloat currentLatitude;
+@property (nonatomic, assign) CGFloat currentLongitude;
+
 @end
 
 @implementation AdSdkBannerView
@@ -514,9 +517,11 @@ NSString * const AdSdkErrorDomain = @"AdSdk";
 	}
 	if (newAdView)
 	{
-
+/*
         newAdView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-
+*/
+        newAdView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        
         if (CGRectEqualToRect(self.bounds, CGRectZero))
 		{
 			self.bounds = newAdView.bounds;
@@ -542,6 +547,20 @@ NSString * const AdSdkErrorDomain = @"AdSdk";
 	}
 }
 
+- (NSString*)birthDateToString {
+    
+    if (!self.birthDate) {
+        return nil;
+    }
+    
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyy-d-M";
+	
+    NSString *dt = [formatter stringFromDate:birthDate];
+    
+    return dt;
+}
+
 - (void)asyncRequestAdWithPublisherId:(NSString *)publisherId
 {
 	@autoreleasepool
@@ -560,8 +579,18 @@ NSString * const AdSdkErrorDomain = @"AdSdk";
 
         NSString *osVersion = [UIDevice currentDevice].systemVersion;
 
+        NSString *bstr = [self birthDateToString];
+        
         NSString *requestString;
-
+        
+        CGFloat latitude = 0.0;
+        CGFloat longtitude = 0.0;
+        
+        if (self.locationAwareAdverts) {
+            latitude = self.currentLatitude;
+            longtitude = self.currentLongitude;
+        }
+        
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 60000
         NSString *iosadvid;
         if ([ASIdentifierManager instancesRespondToSelector:@selector(advertisingIdentifier )]) {
@@ -574,7 +603,7 @@ NSString * const AdSdkErrorDomain = @"AdSdk";
                 }
             }
 
-            requestString=[NSString stringWithFormat:@"c.mraid=%@&o_iosadvidlimit=%@&rt=%@&u=%@&u_wv=%@&u_br=%@&o_iosadvid=%@&v=%@&s=%@&iphone_osversion=%@&spot_id=%@",
+            requestString=[NSString stringWithFormat:@"c.mraid=%@&o_iosadvidlimit=%@&rt=%@&u=%@&u_wv=%@&u_br=%@&o_iosadvid=%@&v=%@&s=%@&iphone_osversion=%@&spot_id=%@&pg=%d&lat=%f&lon=%f&pb=%@",
 						   [mRaidCapable stringByUrlEncoding],
 						   [o_iosadvidlimit stringByUrlEncoding],
 						   [requestType stringByUrlEncoding],
@@ -585,9 +614,13 @@ NSString * const AdSdkErrorDomain = @"AdSdk";
 						   [SDK_VERSION stringByUrlEncoding],
 						   [publisherId stringByUrlEncoding],
 						   [osVersion stringByUrlEncoding],
-						   [advertisingSection?advertisingSection:@"" stringByUrlEncoding]];
+						   [advertisingSection?advertisingSection:@"" stringByUrlEncoding],
+                           gender,
+                           latitude,
+                           longtitude,
+                           (bstr ? [bstr stringByUrlEncoding] : @"")];
         } else {
-			requestString=[NSString stringWithFormat:@"c.mraid=%@&rt=%@&u=%@&u_wv=%@&u_br=%@&v=%@&s=%@&iphone_osversion=%@&spot_id=%@",
+			requestString=[NSString stringWithFormat:@"c.mraid=%@&rt=%@&u=%@&u_wv=%@&u_br=%@&v=%@&s=%@&iphone_osversion=%@&spot_id=%@&pg=%d&lat=%f&lon=%f&pb=%@",
                            [mRaidCapable stringByUrlEncoding],
                            [requestType stringByUrlEncoding],
                            [self.userAgent stringByUrlEncoding],
@@ -596,12 +629,16 @@ NSString * const AdSdkErrorDomain = @"AdSdk";
                            [SDK_VERSION stringByUrlEncoding],
                            [publisherId stringByUrlEncoding],
                            [osVersion stringByUrlEncoding],
-                           [advertisingSection?advertisingSection:@"" stringByUrlEncoding]];
+                           [advertisingSection?advertisingSection:@"" stringByUrlEncoding],
+                           gender,
+                           latitude,
+                           longtitude,
+                           (bstr ? [bstr stringByUrlEncoding] : @"")];
 
         }
 #else
 
-        requestString=[NSString stringWithFormat:@"c.mraid=%@&rt=%@&u=%@&u_wv=%@&u_br=%@&v=%@&s=%@&iphone_osversion=%@&spot_id=%@",
+        requestString=[NSString stringWithFormat:@"c.mraid=%@&rt=%@&u=%@&u_wv=%@&u_br=%@&v=%@&s=%@&iphone_osversion=%@&spot_id=%@&pg=%d&lat=%f&lon=%f&pb=%@",
                        [mRaidCapable stringByUrlEncoding],
                        [requestType stringByUrlEncoding],
                        [self.userAgent stringByUrlEncoding],
@@ -610,7 +647,11 @@ NSString * const AdSdkErrorDomain = @"AdSdk";
                        [SDK_VERSION stringByUrlEncoding],
                        [publisherId stringByUrlEncoding],
                        [osVersion stringByUrlEncoding],
-                       [advertisingSection?advertisingSection:@"" stringByUrlEncoding]];
+                       [advertisingSection?advertisingSection:@"" stringByUrlEncoding],
+                       gender,
+                       latitude,
+                       longtitude,
+                       (bstr ? [bstr stringByUrlEncoding] : @"")];
 
 #endif
 
@@ -862,6 +903,13 @@ NSString * const AdSdkErrorDomain = @"AdSdk";
 	}
 }
 
+#pragma mark - Location
+
+- (void)setLocationWithLatitude:(CGFloat)latitude_ longitude:(CGFloat)longitude_ {
+    self.currentLatitude = latitude_;
+    self.currentLongitude = longitude_;
+}
+
 #pragma mark WebView Delegate (Text Ads)
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
@@ -997,6 +1045,8 @@ NSString * const AdSdkErrorDomain = @"AdSdk";
 @synthesize userAgent;
 @synthesize skipOverlay;
 @synthesize adapter;
+@synthesize gender;
+@synthesize locationAwareAdverts;
+@synthesize birthDate;
 
 @end
-

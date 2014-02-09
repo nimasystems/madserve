@@ -47,6 +47,8 @@
 		0FCEB20A150EBF9C00BD5BD3 /* AdSdkVideoInterstitialViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FCEB206150EBF9C00BD5BD3 /* AdSdkVideoInterstitialViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0FCEB20B150EBF9C00BD5BD3 /* AdSdkVideoInterstitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FCEB207150EBF9C00BD5BD3 /* AdSdkVideoInterstitialViewController.m */; };
 		0FCEB20C150EBF9C00BD5BD3 /* AdSdkVideoInterstitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FCEB207150EBF9C00BD5BD3 /* AdSdkVideoInterstitialViewController.m */; };
+		0FD10CA618A7D9D6007906A8 /* defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FD10CA518A7D9D6007906A8 /* defines.h */; };
+		0FD10CA718A7D9D6007906A8 /* defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FD10CA518A7D9D6007906A8 /* defines.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0FE28D7614E34B3000CEA1CD /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FE28D7414E34B1600CEA1CD /* MediaPlayer.framework */; };
 		0FF1B5FD16E60FFD0037981F /* MP_MPBannerAdapterManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FF1B59816E60FFD0037981F /* MP_MPBannerAdapterManager.h */; };
 		0FF1B5FE16E60FFD0037981F /* MP_MPBannerAdapterManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FF1B59816E60FFD0037981F /* MP_MPBannerAdapterManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -337,6 +339,7 @@
 		0F9B947B161F15DD00348628 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		0FCEB206150EBF9C00BD5BD3 /* AdSdkVideoInterstitialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdSdkVideoInterstitialViewController.h; sourceTree = "<group>"; };
 		0FCEB207150EBF9C00BD5BD3 /* AdSdkVideoInterstitialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdSdkVideoInterstitialViewController.m; sourceTree = "<group>"; };
+		0FD10CA518A7D9D6007906A8 /* defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = defines.h; sourceTree = "<group>"; };
 		0FE28D7414E34B1600CEA1CD /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		0FF1B59816E60FFD0037981F /* MP_MPBannerAdapterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MP_MPBannerAdapterManager.h; sourceTree = "<group>"; };
 		0FF1B59916E60FFD0037981F /* MP_MPBannerAdapterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MP_MPBannerAdapterManager.m; sourceTree = "<group>"; };
@@ -745,6 +748,7 @@
 			children = (
 				A7992E721489362800E86AC8 /* AdSdkSDKSource-Info.plist */,
 				A7992E731489362800E86AC8 /* AdSdkSDKSource-Prefix.pch */,
+				0FD10CA518A7D9D6007906A8 /* defines.h */,
 				A7992E741489362800E86AC8 /* AdSdk.h */,
 				A7992E751489362800E86AC8 /* Source */,
 			);
@@ -888,6 +892,7 @@
 				0FF1B63C16E60FFD0037981F /* MPGlobal.h in Headers */,
 				0FF1B64016E60FFD0037981F /* MPKeywordProvider.h in Headers */,
 				0FF1B64216E60FFD0037981F /* MP_MPProgressOverlayView.h in Headers */,
+				0FD10CA618A7D9D6007906A8 /* defines.h in Headers */,
 				0FF1B64616E60FFD0037981F /* MP_MPBaseInterstitialAdapter.h in Headers */,
 				0FF1B64A16E60FFD0037981F /* MP_MPHTMLInterstitialAdapter.h in Headers */,
 				0FF1B64E16E60FFD0037981F /* MP_MPHTMLInterstitialViewController.h in Headers */,
@@ -1010,6 +1015,7 @@
 				0FF1B6EE16E610040037981F /* AdSdk_CJSONDeserializer.h in Headers */,
 				0FF1B6F216E610040037981F /* AdSdk_CJSONScanner.h in Headers */,
 				0FF1B6F616E610040037981F /* AdSdk_CJSONSerializer.h in Headers */,
+				0FD10CA718A7D9D6007906A8 /* defines.h in Headers */,
 				0FF1B6FA16E610040037981F /* JSONRepresentation.h in Headers */,
 				A7992ED61489373000E86AC8 /* AdSdkBannerView.h in Headers */,
 			);

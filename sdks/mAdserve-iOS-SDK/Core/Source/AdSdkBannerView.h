@@ -1,5 +1,4 @@
-
-
+#import "defines.h"
 #import <UIKit/UIKit.h>
 
 enum {
@@ -67,6 +66,13 @@ enum {
 @property (strong, nonatomic) NSString *requestURL;
 
 @property (nonatomic, assign) BOOL allowDelegateAssigmentToRequestAd;
+
+@property (nonatomic, assign) AdGender gender;
+@property (nonatomic, copy) NSDate *birthDate;
+
+@property (nonatomic, assign) BOOL locationAwareAdverts;
+
+- (void)setLocationWithLatitude:(CGFloat)latitude longitude:(CGFloat)longitude;
 
 - (void)requestAd;
 
