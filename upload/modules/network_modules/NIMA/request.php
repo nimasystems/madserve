@@ -96,7 +96,7 @@ class NIMA implements networkmodule {
 		}*/
 
 		if ($request_type == 'banner') {
-			$tempad['url'] = 'http://www.nimasystems.com';
+			$tempad['url'] = 'http://m.grabo.bg';
 			$tempad['type'] = 'banner';
 			$tempad['markup'] = (rand(1, 2) == 2 ?
 					'<html><body style="height:100%;background-color:green">this is a <b style="color:red">test</b> string</body></html>' :
@@ -118,7 +118,7 @@ class NIMA implements networkmodule {
 					'<html><body style="height:100%;background-color:green">this is a <b style="color:red">test</b> string</body></html>' :
 					'<html><body style="height:100%;background-color:green">HOORAYY INTERSTITIAL!</body></html>'
 			);
-			$tempad['markup'] = 'http://www.abv.bg';
+			$tempad['markup'] = 'http://m.grabo.bg';
 			
 			/*<?xml version="1.0" encoding="UTF-8" ?>
 <ad type="interstitial" animation="None"><interstitial preload="0" autoclose="0" type="markup"  orientation="portrait"><markup><![CDATA[<html><body>HOORAYY!</body></html>]]></markup><skipbutton show="1" showafter="0"></skipbutton><navigation show="0"><topbar custombackgroundurl="" show="0" title="fixed" titlecontent=""></topbar><bottombar custombackgroundurl="" show="0" backbutton="0" forwardbutton="0" reloadbutton="0" externalbutton="0" timer="0"></bottombar></navigation></interstitial></ad>*/
