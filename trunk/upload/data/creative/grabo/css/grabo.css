@@ -13,11 +13,11 @@ body {
     background-position: 0px 0px;
     width: 101px;
     height: 32px;
-    float: left;
+    display: inline-block;
 }
 .content {
     padding-left: 20px;
     padding-top: 5px;
-    float: left;
+    display: inline-block;
     font-size: 1.4em;
 }
