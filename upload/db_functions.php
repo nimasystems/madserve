@@ -47,7 +47,7 @@ function MAD_connect_repdb()
 	}
 	// Main Database
 
-	$repdb = mysql_connect($dbhost_repdb, $dbuname_repdb, $dbpass_repdb);
+	$repdb = @mysql_connect($dbhost_repdb, $dbuname_repdb, $dbpass_repdb);
 	mysql_select_db ($dbname_repdb, $repdb);
 
 	if ($repdb){

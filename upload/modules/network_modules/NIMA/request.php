@@ -1,78 +1,46 @@
 <?php
 class NIMA implements networkmodule {
 	public function request($request_type, $request_info, $network_ids, $backfill) {
-			
-		/*F:START*/
 
-		error_reporting(0); /*Catch XML Exceptions*/
-			
+		error_reporting(0);
+		
+		// disabled
+		return false;
+
 		global $zone_detail;
 
 		$httpConfig['method']     = 'POST';
 		$httpConfig['timeout']    = 1;
-		$httpConfig['special']     = 'INMOBI';
-		$httpConfig['inmobisiteid']     = $network_ids['p_1'];
-			
+		$httpConfig['siteid']     = $network_ids['p_1'];
+
 		$http = new Http();
 		$http->initialize($httpConfig);
-			
+
+		$http->addParam('zone_type', $request_type);
+		$http->addParam('zone_size', $zone_detail['zone_width'] . 'x' . $zone_detail['zone_height']);
+		$http->addParam('zone_refresh_time', $zone_detail['zone_refresh']);
+		$http->addParam('zone_lastrequest', $zone_detail['zone_lastrequest']);
+		$http->addParam('zone_placement_id', $request_info['placement_hash']);
+
 		if ($request_type=='banner' or $request_type=='interstitial'){
-			$request_url='http://madserve.dev.bgmiracle.com/nimatest.php';
-			$http->addParam('mk-siteid'   , $network_ids['p_1']);
-			$http->addParam('mk-carrier'   , $request_info['ip_address']);
-			$http->addParam('h-user-agent'   , $request_info['user_agent']);
-			$http->addParam('mk-version'   , 'pr-SPEC-ATATA-20090521');
-			$http->addParam('h-page-url'   , $request_info['referer']);
-			$http->addParam('format'   , 'axml');
 
-
-			if ($request_type=='interstitial'){
-
-				if ($request_info['main_device']=='IPAD'){
-					$http->addParam('mk-ad-slot'   , '16');
-				}
-				else {
-					$http->addParam('mk-ad-slot'   , '14');
-				}
-
-			}
-			else {
-				/*Zone Size Identification*/
-				if ($zone_detail['zone_width']=='300' && $zone_detail['zone_height']=='250'){
-					$http->addParam('mk-ad-slot'   , '10');
-				}
-				else if ($zone_detail['zone_width']=='728' && $zone_detail['zone_height']=='90'){
-					$http->addParam('mk-ad-slot'   , '11');
-				}
-				else if ($zone_detail['zone_width']=='468' && $zone_detail['zone_height']=='60'){
-					$http->addParam('mk-ad-slot'   , '12');
-				}
-				else if ($zone_detail['zone_width']=='120' && $zone_detail['zone_height']=='600'){
-					$http->addParam('mk-ad-slot'   , '13');
-				}
-				else if ($zone_detail['zone_width']=='320' && $zone_detail['zone_height']=='480'){
-					$http->addParam('mk-ad-slot'   , '14');
-				}
-				else if ($zone_detail['zone_width']=='1024' && $zone_detail['zone_height']=='768'){
-					$http->addParam('mk-ad-slot'   , '16');
-				}
-				else if ($zone_detail['zone_width']=='1280' && $zone_detail['zone_height']=='800'){
-					$http->addParam('mk-ad-slot'   , '17');
-				}
-				else {
-				}
-				/*END: Zone Size Identification*/
-			}
-
-
-			if (isset($_GET['rt']) && ($_GET['rt']=='iphone_app' or $_GET['rt']=='android_app' or $_GET['rt']=='ipad_app')){
-				if (isset($_GET['o'])){
-					$http->addParam('u-id'   , $_GET['o']);
-				}
-				$http->addParam('d-localization'   , 'en_US');
-				$http->addParam('d-netType'   , 'WiFi');
-			}
-
+			// private vars!
+			//$http->addParam('p_carrier'   , $request_info['ip_address']);
+			//$http->addParam('p_longtitude'   , $request_info['longitude']);
+			//$http->addParam('p_latitude'   , $request_info['latitude']);
+				
+			$http->addParam('p_siteid'   , $network_ids['p_1']);
+			$http->addParam('affid'   , $network_ids['p_1']);
+			$http->addParam('p_user_agent'   , $request_info['user_agent']);
+			$http->addParam('p_page_url'   , $request_info['referer']);
+			$http->addParam('p_main_device', $request_info['main_device']);
+			$http->addParam('p_device_os', $request_info['device_os']);
+			$http->addParam('p_iphone_osversion', $request_info['iphone_osversion']);
+			$http->addParam('p_adspace_width', $request_info['adspace_width']);
+			$http->addParam('p_adspace_height', $request_info['adspace_height']);
+			$http->addParam('p_channel', $request_info['channel']);
+			$http->addParam('p_geo_country', $request_info['geo_country']);
+			$http->addParam('p_geo_region', $request_info['geo_region']);
 		}
 		else {
 			return false;
@@ -96,33 +64,34 @@ class NIMA implements networkmodule {
 		}*/
 
 		if ($request_type == 'banner') {
-			$tempad['url'] = 'http://m.grabo.bg';
+			$tempad['url'] = 'http://b.grabo.bg/mobile/_nimasystems/popup/?affid=18850'; // 'http://b.grabo.bg/?city=&affid=18825&size=300x600';
 			$tempad['type'] = 'banner';
-			$tempad['markup'] = (rand(1, 2) == 2 ?
+			/*$tempad['markup'] = (rand(1, 2) == 2 ?
 					'<html><body style="height:100%;background-color:green">this is a <b style="color:red">test</b> string</body></html>' :
 					'<html><body style="height:100%;background-color:green">HOORAYY!</body></html>'
-			);
-			
-			$tempad['markup'] = file_get_contents('http://madserve.dev.bgmiracle.com/data/creative/grabo/banner_hx50.html');
-				
+			);*/
+
+			$tempad['markup'] = file_get_contents('http://b.grabo.bg/mobile/_nimasystems/footer/?affid=18850');
+			//$tempad['markup'] = file_get_contents('http://ads.nimasystems.com/data/creative/grabo/banner_hx50.html');
+
 			/*<?xml version="1.0" encoding="UTF-8" ?>
 			 <request type="textAd"><htmlString skipoverlaybutton="0"><![CDATA[<html><body>HOORAYY!</body></html>]]></htmlString><clicktype>inapp</clicktype><clickurl><![CDATA[http://madserve.localhost/md.click.php?zone_id=3&h=1a1e8dcabe648ae330b28b919838edac&type=network&campaign_id=1&network_id=32&c=aHR0cDovL3d3dy5uaW1hc3lzdGVtcy5jb20,]]></clickurl><urltype>link</urltype><refresh>30</refresh><scale>no</scale><skippreflight>yes</skippreflight></request>*/
-				
+
 			// http://madserve.localhost/md.request.php?sdk=banner&c.mraid=1&o_iosadvidlimit=0&rt=iphone_app&u=Mozilla%2F5.0%20%28iPhone%3B%20CPU%20iPhone%20OS%207_1%20like%20Mac%20OS%20X%29%20AppleWebKit%2F537.51.2%20%28KHTML%2C%20like%20Gecko%29%20Mobile%2F11D5145e&u_wv=Mozilla%2F5.0%20%28iPhone%3B%20CPU%20iPhone%20OS%207_1%20like%20Mac%20OS%20X%29%20AppleWebKit%2F537.51.2%20%28KHTML%2C%20like%20Gecko%29%20Mobile%2F11D5145e&u_br=Mozilla%2F5.0%20%28iPhone%3B%20CPU%20iPhone%20OS%207_1%20like%20Mac%20OS%20X%29%20AppleWebKit%2F537.51.2%20%28KHTML%2C%20like%20Gecko%29%20Version%2Funknown%20Mobile%2F11D5145e%20Safari%2Funknown&o_iosadvid=92FCD837-4F8E-4B58-9158-30E390D08C26&v=4.1.6&s=5cfbb96276738ca82edd04225c3b5c1d&iphone_osversion=7.1&spot_id=
-			
-			
+
+
 		} else {
 			$tempad['type'] = 'banner';
 			$tempad['interstitial-type'] = 'url';
-			$tempad['markup'] = (rand(1, 2) == 2 ?
+			/*$tempad['markup'] = (rand(1, 2) == 2 ?
 					'<html><body style="height:100%;background-color:green">this is a <b style="color:red">test</b> string</body></html>' :
 					'<html><body style="height:100%;background-color:green">HOORAYY INTERSTITIAL!</body></html>'
-			);
-			$tempad['markup'] = 'http://m.grabo.bg';
-			
+			);*/
+			$tempad['markup'] = 'http://b.grabo.bg/mobile/_nimasystems/popup/?affid=18850';
+
 			/*<?xml version="1.0" encoding="UTF-8" ?>
-<ad type="interstitial" animation="None"><interstitial preload="0" autoclose="0" type="markup"  orientation="portrait"><markup><![CDATA[<html><body>HOORAYY!</body></html>]]></markup><skipbutton show="1" showafter="0"></skipbutton><navigation show="0"><topbar custombackgroundurl="" show="0" title="fixed" titlecontent=""></topbar><bottombar custombackgroundurl="" show="0" backbutton="0" forwardbutton="0" reloadbutton="0" externalbutton="0" timer="0"></bottombar></navigation></interstitial></ad>*/
-			
+			 <ad type="interstitial" animation="None"><interstitial preload="0" autoclose="0" type="markup"  orientation="portrait"><markup><![CDATA[<html><body>HOORAYY!</body></html>]]></markup><skipbutton show="1" showafter="0"></skipbutton><navigation show="0"><topbar custombackgroundurl="" show="0" title="fixed" titlecontent=""></topbar><bottombar custombackgroundurl="" show="0" backbutton="0" forwardbutton="0" reloadbutton="0" externalbutton="0" timer="0"></bottombar></navigation></interstitial></ad>*/
+
 			// http://madserve.localhost/md.request.php?sdk=vad&c.mraid=0&o_iosadvidlimit=0&u=Mozilla%2F5.0%20%28iPhone%3B%20CPU%20iPhone%20OS%207_1%20like%20Mac%20OS%20X%29%20AppleWebKit%2F537.51.2%20%28KHTML%2C%20like%20Gecko%29%20Mobile%2F11D5145e&u_wv=Mozilla%2F5.0%20%28iPhone%3B%20CPU%20iPhone%20OS%207_1%20like%20Mac%20OS%20X%29%20AppleWebKit%2F537.51.2%20%28KHTML%2C%20like%20Gecko%29%20Mobile%2F11D5145e&u_br=Mozilla%2F5.0%20%28iPhone%3B%20CPU%20iPhone%20OS%207_1%20like%20Mac%20OS%20X%29%20AppleWebKit%2F537.51.2%20%28KHTML%2C%20like%20Gecko%29%20Version%2Funknown%20Mobile%2F11D5145e%20Safari%2Funknown&v=4.1.6&s=21080a259d6574c7863ca168b47e670a&iphone_osversion=7.1&o_iosadvid=92FCD837-4F8E-4B58-9158-30E390D08C26&rt=iphone_app&t=1391747751.608625&i=10.10.9.56
 		}
 
