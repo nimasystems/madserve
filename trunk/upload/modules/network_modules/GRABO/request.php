@@ -60,14 +60,15 @@ class GRABO implements networkmodule {
 		}*/
 
 		if ($request_type == 'banner') {
-			$tempad['url'] = 'http://b.grabo.bg/?city=&affid=18825&size=300x600';
+			$tempad['url'] = 'http://b.grabo.bg/mobile/_nimasystems/popup/?affid=18850'; // 'http://b.grabo.bg/?city=&affid=18825&size=300x600';
 			$tempad['type'] = 'banner';
 			/*$tempad['markup'] = (rand(1, 2) == 2 ?
 					'<html><body style="height:100%;background-color:green">this is a <b style="color:red">test</b> string</body></html>' :
 					'<html><body style="height:100%;background-color:green">HOORAYY!</body></html>'
 			);*/
 
-			$tempad['markup'] = file_get_contents('http://ads.nimasystems.com/data/creative/grabo/banner_hx50.html');
+			$tempad['markup'] = file_get_contents('http://b.grabo.bg/mobile/_nimasystems/footer/?affid=18850');
+			//$tempad['markup'] = file_get_contents('http://ads.nimasystems.com/data/creative/grabo/banner_hx50.html');
 
 			/*<?xml version="1.0" encoding="UTF-8" ?>
 			 <request type="textAd"><htmlString skipoverlaybutton="0"><![CDATA[<html><body>HOORAYY!</body></html>]]></htmlString><clicktype>inapp</clicktype><clickurl><![CDATA[http://madserve.localhost/md.click.php?zone_id=3&h=1a1e8dcabe648ae330b28b919838edac&type=network&campaign_id=1&network_id=32&c=aHR0cDovL3d3dy5uaW1hc3lzdGVtcy5jb20,]]></clickurl><urltype>link</urltype><refresh>30</refresh><scale>no</scale><skippreflight>yes</skippreflight></request>*/
@@ -82,7 +83,7 @@ class GRABO implements networkmodule {
 					'<html><body style="height:100%;background-color:green">this is a <b style="color:red">test</b> string</body></html>' :
 					'<html><body style="height:100%;background-color:green">HOORAYY INTERSTITIAL!</body></html>'
 			);*/
-			$tempad['markup'] = 'http://b.grabo.bg/?city=&affid=18825&size=300x600';
+			$tempad['markup'] = 'http://b.grabo.bg/mobile/_nimasystems/popup/?affid=18850';
 
 			/*<?xml version="1.0" encoding="UTF-8" ?>
 			 <ad type="interstitial" animation="None"><interstitial preload="0" autoclose="0" type="markup"  orientation="portrait"><markup><![CDATA[<html><body>HOORAYY!</body></html>]]></markup><skipbutton show="1" showafter="0"></skipbutton><navigation show="0"><topbar custombackgroundurl="" show="0" title="fixed" titlecontent=""></topbar><bottombar custombackgroundurl="" show="0" backbutton="0" forwardbutton="0" reloadbutton="0" externalbutton="0" timer="0"></bottombar></navigation></interstitial></ad>*/
