@@ -160,7 +160,7 @@ class GRABO implements networkmodule {
 				$ad['interstitial-type']='markup';
 				$ad['interstitial-content']=$tempad['markup'];
 				$ad['interstitial-skipbutton-show']=1;
-				$ad['interstitial-skipbutton-showafter']=3;
+				$ad['interstitial-skipbutton-showafter']=0;
 				$ad['interstitial-navigation-show']=0;
 				$ad['interstitial-navigation-topbar-show']=0;
 				$ad['interstitial-navigation-bottombar-show']=0;
