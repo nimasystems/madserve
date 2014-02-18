@@ -33,20 +33,14 @@
 package com.adsdk.sdk.mraid;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.location.Location;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebViewDatabase;
 import android.widget.FrameLayout;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 import com.adsdk.sdk.AdListener;
@@ -90,11 +84,8 @@ public class MoPubView extends FrameLayout {
     protected BaseAdapter mAdapter;
     
     private Context mContext;
-    private BroadcastReceiver mScreenStateReceiver;
-    private boolean mIsInForeground;
     private LocationAwareness mLocationAwareness;
     private int mLocationPrecision;
-    private boolean mPreviousAutorefreshSetting = false;
 
     private AdListener mAdListener;
     
@@ -113,7 +104,6 @@ public class MoPubView extends FrameLayout {
         super(context, attrs);
 
         mContext = context;
-        mIsInForeground = (getVisibility() == VISIBLE);
         mLocationAwareness = LocationAwareness.LOCATION_AWARENESS_NORMAL;
         mLocationPrecision = DEFAULT_LOCATION_PRECISION;
         
@@ -239,12 +229,10 @@ public class MoPubView extends FrameLayout {
         
         if (visibility == VISIBLE) {
             Log.d("MoPub", "Ad Unit ("+mAdView.getAdUnitId()+") going visible: enabling refresh");
-            mIsInForeground = true;
             mAdView.setAutorefreshEnabled(true);
         }
         else {
             Log.d("MoPub", "Ad Unit ("+mAdView.getAdUnitId()+") going invisible: disabling refresh");
-            mIsInForeground = false;
             mAdView.setAutorefreshEnabled(false);
         }
     }

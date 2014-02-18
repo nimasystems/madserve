@@ -131,7 +131,7 @@ class GRABO implements networkmodule {
 			if ($request_info['main_device'] == 'IPAD') {
 				$s = '1024x768';
 			}
-
+			
 			//$tempad['url'] = 'http://b.grabo.bg/mobile/_nimasystems/popup/?affid=18850&zone_size=' . $s;
 			$tempad['url'] = $banner_url;
 			$tempad['type'] = 'banner';

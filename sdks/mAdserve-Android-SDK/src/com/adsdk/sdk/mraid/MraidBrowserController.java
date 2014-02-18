@@ -1,9 +1,6 @@
 package com.adsdk.sdk.mraid;
 
 
-import com.adsdk.sdk.Const;
-import com.adsdk.sdk.banner.InAppWebView;
-
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;

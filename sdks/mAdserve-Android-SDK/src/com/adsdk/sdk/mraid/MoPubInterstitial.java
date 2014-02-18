@@ -41,7 +41,6 @@ import com.adsdk.sdk.mraid.MoPubView.LocationAwareness;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.location.Location;
 import android.util.Log;
 

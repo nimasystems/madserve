@@ -14,20 +14,24 @@ import java.util.Set;
 
 import org.apache.http.HttpStatus;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebSettings.PluginState;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.adsdk.sdk.Const;
 import com.adsdk.sdk.video.InterstitialController.BrowserControl;
 import com.adsdk.sdk.video.WebViewClient.OnPageLoadedListener;
 
@@ -74,6 +78,7 @@ public class WebFrame extends FrameLayout implements BrowserControl {
 		}
 	}
 
+	@SuppressLint("NewApi")
 	public WebFrame(Activity context, boolean allowNavigation,
 			boolean scroll, boolean showExit) {
 		super(context);
@@ -88,7 +93,23 @@ public class WebFrame extends FrameLayout implements BrowserControl {
 		webSettings.setSavePassword(false);
 		webSettings.setSaveFormData(false);
 		webSettings.setJavaScriptEnabled(true);
-		webSettings.setPluginsEnabled(true);
+
+		if (Build.VERSION.SDK_INT < 8) {
+			try {
+				Object c = webSettings;
+				Class[] paramTypes = new Class[1];
+				paramTypes[0] = Boolean.class;
+				Method method = c.getClass().getMethod("setPluginsEnabled",
+						paramTypes);
+				method.invoke(c, true);
+			} catch (Exception e) {
+				//
+			}
+			// getSettings().setPluginsEnabled(true);
+		} else {
+			webSettings.setPluginState(PluginState.ON);
+		}
+
 		webSettings.setSupportZoom(enableZoom);
 		webSettings.setBuiltInZoomControls(enableZoom);
 
@@ -147,7 +168,7 @@ public class WebFrame extends FrameLayout implements BrowserControl {
 	public void setMarkup(String htmlMarkup) {
 		String data = Uri.encode(htmlMarkup);
 		this.mWebViewClient.setAllowedUrl(null);
-		this.mWebView.loadData(data, "text/html", ENCODING);
+		this.mWebView.loadData(data, "text/html; charset=" + ENCODING, ENCODING);
 	}
 
 	@Override

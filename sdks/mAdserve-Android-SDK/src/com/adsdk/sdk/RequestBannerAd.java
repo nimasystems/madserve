@@ -1,8 +1,5 @@
 package com.adsdk.sdk;
 
-import static com.adsdk.sdk.Const.RESPONSE_ENCODING;
-
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -69,14 +66,6 @@ public class RequestBannerAd extends RequestAd<BannerAd> {
 
 	private int getValueAsInt(final Document document, final String name) {
 		return this.getInteger(this.getValue(document, name));
-	}
-
-	private String convertStreamToString(java.io.InputStream is) {
-		try {
-			return new java.util.Scanner(is).useDelimiter("\\A").next();
-		} catch (java.util.NoSuchElementException e) {
-			return "";
-		}
 	}
 
 	@Override

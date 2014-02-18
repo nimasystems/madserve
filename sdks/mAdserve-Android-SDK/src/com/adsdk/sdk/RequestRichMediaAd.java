@@ -2,7 +2,6 @@ package com.adsdk.sdk;
 
 import static com.adsdk.sdk.Const.RESPONSE_ENCODING;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -16,10 +15,7 @@ import org.xml.sax.XMLReader;
 import com.adsdk.sdk.video.ResponseHandler;
 import com.adsdk.sdk.video.RichMediaAd;
 
-
 public class RequestRichMediaAd extends RequestAd<RichMediaAd> {
-
-
 
 	public RequestRichMediaAd() {
 		is = null;
@@ -38,11 +34,11 @@ public class RequestRichMediaAd extends RequestAd<RichMediaAd> {
 
 			ResponseHandler myHandler = new ResponseHandler();
 			xr.setContentHandler(myHandler);
-			//			byte[] bytes = xml.getBytes(RESPONSE_ENCODING);
-			//			InputSource src = new InputSource(new ByteArrayInputStream(bytes));
-			Reader reader = new InputStreamReader(is,"UTF-8");
+			// byte[] bytes = xml.getBytes(RESPONSE_ENCODING);
+			// InputSource src = new InputSource(new
+			// ByteArrayInputStream(bytes));
+			Reader reader = new InputStreamReader(is, "UTF-8");
 			InputSource src = new InputSource(reader);
-
 
 			xr.parse(src);
 			return myHandler.getRichMediaAd();
@@ -53,8 +49,7 @@ public class RequestRichMediaAd extends RequestAd<RichMediaAd> {
 	}
 
 	@Override
-	RichMediaAd parse(InputStream inputStream)
-			throws RequestException {
+	RichMediaAd parse(InputStream inputStream) throws RequestException {
 		try {
 			SAXParserFactory spf = SAXParserFactory.newInstance();
 			SAXParser sp = spf.newSAXParser();
@@ -70,14 +65,6 @@ public class RequestRichMediaAd extends RequestAd<RichMediaAd> {
 		} catch (Exception e) {
 			throw new RequestException("Cannot parse Response:"
 					+ e.getMessage(), e);
-		}
-	}
-
-	private String convertStreamToString(java.io.InputStream is) {
-		try {
-			return new java.util.Scanner(is).useDelimiter("\\A").next();
-		} catch (java.util.NoSuchElementException e) {
-			return "";
 		}
 	}
 }

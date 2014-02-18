@@ -1,30 +1,18 @@
 package com.adsdk.sdk.banner;
 
-import static com.adsdk.sdk.Const.TAG;
-
 import java.io.InputStream;
-import java.lang.Thread.UncaughtExceptionHandler;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.MessageFormat;
-import java.util.Timer;
 
-import android.Manifest;
-import android.content.BroadcastReceiver;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.location.Location;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Handler;
-import android.telephony.TelephonyManager;
-import android.view.MotionEvent;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.webkit.WebSettings;
@@ -35,11 +23,8 @@ import android.widget.RelativeLayout;
 import android.widget.ViewFlipper;
 
 import com.adsdk.sdk.AdListener;
-import com.adsdk.sdk.AdRequest;
 import com.adsdk.sdk.BannerAd;
 import com.adsdk.sdk.Const;
-import com.adsdk.sdk.RequestBannerAd;
-import com.adsdk.sdk.Util;
 import com.adsdk.sdk.data.ClickType;
 
 public class BannerAdView extends RelativeLayout {
@@ -66,10 +51,6 @@ public class BannerAdView extends RelativeLayout {
 
 	private AdListener adListener;
 
-	private boolean touchMove;
-
-	private InputStream xml;
-
 	private static Method mWebView_SetLayerType;
 	private static Field mWebView_LAYER_TYPE_SOFTWARE;
 
@@ -82,13 +63,16 @@ public class BannerAdView extends RelativeLayout {
 		;
 	}
 
+	public BannerAdView(final Context context) {
+		this(context, null, false, null);
+	}
+	
 	public BannerAdView(final Context context, final BannerAd response, final AdListener adListener) {
 		this(context, response, false, adListener);
 	}
 
 	public BannerAdView(final Context context, final InputStream xml, final boolean animation){
 		super(context);
-		this.xml = xml;
 		mContext = context;
 		this.animation = animation;
 		this.initialize(context);
@@ -103,6 +87,7 @@ public class BannerAdView extends RelativeLayout {
 		this.initialize(context);
 	}
 
+	@SuppressLint("SetJavaScriptEnabled")
 	private WebView createWebView(final Context context) {
 		final WebView webView = new WebView(this.getContext()) {
 
@@ -208,14 +193,14 @@ public class BannerAdView extends RelativeLayout {
 		final float scale = mContext.getResources().getDisplayMetrics().density;
 		this.setLayoutParams(new RelativeLayout.LayoutParams((int)(300*scale+0.5f), (int)(50*scale+0.5f)));
 		final FrameLayout.LayoutParams webViewParams = new FrameLayout.LayoutParams(
-				android.view.ViewGroup.LayoutParams.FILL_PARENT,
-				android.view.ViewGroup.LayoutParams.FILL_PARENT);
+				android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+				android.view.ViewGroup.LayoutParams.MATCH_PARENT);
 		this.viewFlipper.addView(this.firstWebView, webViewParams);
 		this.viewFlipper.addView(this.secondWebView, webViewParams);
 
 		final RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-				android.view.ViewGroup.LayoutParams.FILL_PARENT,
-				android.view.ViewGroup.LayoutParams.FILL_PARENT);
+				android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+				android.view.ViewGroup.LayoutParams.MATCH_PARENT);
 		this.addView(this.viewFlipper, params);
 
 		if (this.animation) {
@@ -303,12 +288,12 @@ public class BannerAdView extends RelativeLayout {
 						this.response.getBannerWidth(),
 						this.response.getBannerHeight());
 				text = Uri.encode(Const.HIDE_BORDER + text);
-				webView.loadData(text, "text/html", Const.ENCODING);
+				webView.loadData(text, "text/html; charset=" + Const.ENCODING, Const.ENCODING);
 				this.notifyLoadAdSucceeded();
 			} else if (this.response.getType() == Const.TEXT) {
 				final String text = Uri.encode(Const.HIDE_BORDER
 						+ this.response.getText());
-				webView.loadData(text, "text/html", Const.ENCODING);
+				webView.loadData(text, "text/html; charset=" + Const.ENCODING, Const.ENCODING);
 				this.notifyLoadAdSucceeded();
 			} 
 

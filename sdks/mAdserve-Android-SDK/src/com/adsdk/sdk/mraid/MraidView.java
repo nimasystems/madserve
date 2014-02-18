@@ -1,8 +1,5 @@
 package com.adsdk.sdk.mraid;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -22,6 +19,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import com.adsdk.sdk.Const;
 
+import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -35,6 +33,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+@SuppressLint("SetJavaScriptEnabled")
 public class MraidView extends WebView {
     private static final String LOGTAG = "MraidView";
     
@@ -297,36 +296,6 @@ public class MraidView extends WebView {
             fireNativeCommandCompleteEvent(commandType);
             return true;
         }
-    }
-    
-    /* 
-     * Copies a file from res/raw to <destinationFilename> in the application file directory.
-     */
-    private String copyRawResourceToFilesDir(int resourceId, String destinationFilename) {
-        InputStream is = getContext().getResources().openRawResource(resourceId);
-        
-        String destinationPath = getContext().getFilesDir().getAbsolutePath() + File.separator + 
-                destinationFilename;
-        File destinationFile = new File(destinationPath);
-        FileOutputStream fos;
-        try {
-            fos = new FileOutputStream(destinationFile);
-        } catch (FileNotFoundException e) {
-            return "";
-        }
-        
-        byte[] b = new byte[8192];
-        try {
-            for (int n; (n = is.read(b)) != -1;) {
-                fos.write(b, 0, n);
-            }
-        } catch (IOException e) {
-            return "";
-        } finally {
-            try { is.close(); fos.close(); } catch (IOException e) { }
-        }
-        
-        return destinationPath;
     }
     
     private class MraidWebViewClient extends WebViewClient {

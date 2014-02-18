@@ -2,6 +2,7 @@ package com.adsdk.sdk.mraid;
 
 import com.adsdk.sdk.video.ResourceManager;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
@@ -28,7 +29,7 @@ public abstract class BaseActivity extends Activity {
         
         mLayout = new RelativeLayout(this);
         final RelativeLayout.LayoutParams adViewLayout = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.FILL_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         adViewLayout.addRule(RelativeLayout.CENTER_IN_PARENT);
         mLayout.addView(getAdView(), adViewLayout);
         setContentView(mLayout);
@@ -38,14 +39,23 @@ public abstract class BaseActivity extends Activity {
     
     public abstract View getAdView();
     
-    protected void showInterstitialCloseButton() {
+    @SuppressWarnings("deprecation")
+	@SuppressLint("NewApi")
+	protected void showInterstitialCloseButton() {
         if (mCloseButton == null) {
             StateListDrawable states = new StateListDrawable();
             states.addState(new int[] {-android.R.attr.state_pressed},ResourceManager.getStaticResource(this, ResourceManager.DEFAULT_CLOSE_BUTTON_NORMAL_RESOURCE_ID));
             states.addState(new int[] {android.R.attr.state_pressed},ResourceManager.getStaticResource(this, ResourceManager.DEFAULT_CLOSE_BUTTON_PRESSED_RESOURCE_ID));
             mCloseButton = new ImageButton(this);
             mCloseButton.setImageDrawable(states);
-            mCloseButton.setBackgroundDrawable(null);
+            
+            int sdk = android.os.Build.VERSION.SDK_INT;
+            if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+            	mCloseButton.setBackgroundDrawable(null);
+            } else {
+            	mCloseButton.setBackground(null);
+            }
+            
             mCloseButton.setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
                     finish();

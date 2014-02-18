@@ -14,12 +14,10 @@ import java.util.Locale;
 import java.util.UUID;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.location.Location;
 import android.location.LocationManager;
@@ -29,7 +27,6 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import android.provider.Settings.Secure;
 import android.telephony.TelephonyManager;
-import android.util.DisplayMetrics;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
@@ -252,10 +249,10 @@ public class Util {
 		final String language = l.getLanguage();
 		String locale = "en";
 		if (language != null) {
-			locale = language.toLowerCase();
+			locale = language.toLowerCase(Locale.ENGLISH);
 			final String country = l.getCountry();
 			if (country != null) {
-				locale += "-" + country.toLowerCase();
+				locale += "-" + country.toLowerCase(Locale.ENGLISH);
 			}
 		}
 

@@ -84,8 +84,8 @@ public class InterstitialController extends LinearLayout {
 
 	public void setBrowserView(View browserView) {
 		mBrowserView.addView(browserView, new FrameLayout.LayoutParams(
-				android.view.ViewGroup.LayoutParams.FILL_PARENT,
-				android.view.ViewGroup.LayoutParams.FILL_PARENT, Gravity.CENTER));
+				android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+				android.view.ViewGroup.LayoutParams.MATCH_PARENT, Gravity.CENTER));
 	}
 
 	public void setBrowser(BrowserControl browser) {
@@ -98,13 +98,13 @@ public class InterstitialController extends LinearLayout {
 		this.setWeightSum(1);
 		this.setOrientation(LinearLayout.VERTICAL);
 		this.setLayoutParams(new LinearLayout.LayoutParams(
-				android.view.ViewGroup.LayoutParams.FILL_PARENT,
-				android.view.ViewGroup.LayoutParams.FILL_PARENT));
+				android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+				android.view.ViewGroup.LayoutParams.MATCH_PARENT));
 
 		mTopBar = new LinearLayout(mContext);
 		mTopBar.setOrientation(LinearLayout.HORIZONTAL);
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-				android.view.ViewGroup.LayoutParams.FILL_PARENT,
+				android.view.ViewGroup.LayoutParams.MATCH_PARENT,
 				android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
 		params.gravity = Gravity.TOP;
 		params.weight = 0;
@@ -136,7 +136,7 @@ public class InterstitialController extends LinearLayout {
 
 		mBrowserView = new FrameLayout(mContext);
 		LinearLayout.LayoutParams browserParams = new LinearLayout.LayoutParams(
-				android.view.ViewGroup.LayoutParams.FILL_PARENT,
+				android.view.ViewGroup.LayoutParams.MATCH_PARENT,
 				android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
 		browserParams.gravity = Gravity.TOP;
 		browserParams.weight = 1;
@@ -146,7 +146,7 @@ public class InterstitialController extends LinearLayout {
 		mBottomBar = new LinearLayout(mContext);
 		mBottomBar.setOrientation(LinearLayout.HORIZONTAL);
 		params = new LinearLayout.LayoutParams(
-				android.view.ViewGroup.LayoutParams.FILL_PARENT,
+				android.view.ViewGroup.LayoutParams.MATCH_PARENT,
 				(int)(metrics.widthPixels*0.119));
 		params.gravity = Gravity.BOTTOM;
 		params.weight = 0;
@@ -165,7 +165,7 @@ public class InterstitialController extends LinearLayout {
 		LinearLayout buttonPanel = new LinearLayout(mContext);
 		params = new LinearLayout.LayoutParams(
 				android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
-				android.view.ViewGroup.LayoutParams.FILL_PARENT, 0);
+				android.view.ViewGroup.LayoutParams.MATCH_PARENT, 0);
 		params.gravity = Gravity.LEFT | Gravity.CENTER_VERTICAL;
 		buttonPanel.setOrientation(LinearLayout.HORIZONTAL);
 

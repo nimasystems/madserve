@@ -8,6 +8,7 @@ import com.adsdk.sdk.mraid.MraidView.PlacementType;
 import com.adsdk.sdk.mraid.MraidView.ViewState;
 import com.adsdk.sdk.video.ResourceManager;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -273,7 +274,7 @@ class MraidDisplayController extends MraidAbstractController {
         ViewGroup expansionViewContainer = createExpansionViewContainer(expansionContentView, 
                 (int) (width * mDensity), (int) (height * mDensity));
         mRootView.addView(expansionViewContainer, new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.FILL_PARENT, RelativeLayout.LayoutParams.FILL_PARENT));
+                RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
         
         if (mNativeCloseButtonStyle == MraidView.NativeCloseButtonStyle.ALWAYS_VISIBLE || 
                 (!mAdWantsCustomCloseButton && 
@@ -322,13 +323,13 @@ class MraidDisplayController extends MraidAbstractController {
         });
         
         expansionLayout.addView(dimmingView, new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.FILL_PARENT, RelativeLayout.LayoutParams.FILL_PARENT));
+                RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
         
         FrameLayout adContainerLayout = new FrameLayout(getView().getContext());
         adContainerLayout.setId(MraidView.AD_CONTAINER_LAYOUT_ID);
         
         adContainerLayout.addView(expansionContentView, new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.FILL_PARENT, RelativeLayout.LayoutParams.FILL_PARENT));
+                RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
         
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(expandWidth, expandHeight);
         lp.addRule(RelativeLayout.CENTER_IN_PARENT);
@@ -351,7 +352,9 @@ class MraidDisplayController extends MraidAbstractController {
         }
     }
     
-    protected void setNativeCloseButtonEnabled(boolean enabled) {
+    @SuppressLint("NewApi")
+	@SuppressWarnings("deprecation")
+	protected void setNativeCloseButtonEnabled(boolean enabled) {
         if (mRootView == null) return;
         
         FrameLayout adContainerLayout = 
@@ -364,7 +367,14 @@ class MraidDisplayController extends MraidAbstractController {
                 states.addState(new int[] {android.R.attr.state_pressed},ResourceManager.getStaticResource(getView().getContext(), ResourceManager.DEFAULT_CLOSE_BUTTON_NORMAL_RESOURCE_ID));
                 mCloseButton = new ImageButton(getView().getContext());
                 mCloseButton.setImageDrawable(states);
-                mCloseButton.setBackgroundDrawable(null);
+
+                int sdk = android.os.Build.VERSION.SDK_INT;
+                if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                	mCloseButton.setBackgroundDrawable(null);
+                } else {
+                	mCloseButton.setBackground(null);
+                }
+                
                 mCloseButton.setOnClickListener(new OnClickListener() {
                     public void onClick(View v) {
                         MraidDisplayController.this.close();

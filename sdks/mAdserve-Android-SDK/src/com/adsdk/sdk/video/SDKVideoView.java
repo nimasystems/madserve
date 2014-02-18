@@ -1,7 +1,5 @@
 package com.adsdk.sdk.video;
 
-import static com.adsdk.sdk.Const.TAG;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Vector;
@@ -64,8 +62,7 @@ public class SDKVideoView extends SurfaceView implements MediaPlayerControl {
 	private HashMap<Integer, Vector<OnTimeEventListener>> mTimeEventListeners = new HashMap<Integer, Vector<OnTimeEventListener>>();
 	public Handler mHandler;
 
-	public SDKVideoView(Context context, int width, int height,
-			int displayMode) {
+	public SDKVideoView(Context context, int width, int height, int displayMode) {
 		super(context);
 		this.mContext = context;
 		mWidth = width;
@@ -74,7 +71,7 @@ public class SDKVideoView extends SurfaceView implements MediaPlayerControl {
 		initVideoView();
 	}
 
-	public void destroy(){
+	public void destroy() {
 		mTimeEventThreadDone.open();
 	}
 
@@ -84,10 +81,10 @@ public class SDKVideoView extends SurfaceView implements MediaPlayerControl {
 		int width = getDefaultSize(mVideoWidth, widthMeasureSpec);
 		int height = getDefaultSize(mVideoHeight, heightMeasureSpec);
 		if (mVideoWidth > 0 && mVideoHeight > 0) {
-			if ( mVideoWidth * height  > width * mVideoHeight ) {
+			if (mVideoWidth * height > width * mVideoHeight) {
 
 				height = width * mVideoHeight / mVideoWidth;
-			} else if ( mVideoWidth * height  < width * mVideoHeight ) {
+			} else if (mVideoWidth * height < width * mVideoHeight) {
 
 				width = height * mVideoWidth / mVideoHeight;
 			} else {
@@ -324,8 +321,7 @@ public class SDKVideoView extends SurfaceView implements MediaPlayerControl {
 		public boolean onInfo(MediaPlayer mp, int what, int extra) {
 
 			if (mOnInfoListener != null) {
-				if (mOnInfoListener.onInfo(mMediaPlayer, what,
-						extra)) {
+				if (mOnInfoListener.onInfo(mMediaPlayer, what, extra)) {
 					return true;
 				}
 			}
@@ -577,6 +573,12 @@ public class SDKVideoView extends SurfaceView implements MediaPlayerControl {
 	@Override
 	public boolean canSeekForward() {
 		return true;
+	}
+
+	@Override
+	public int getAudioSessionId() {
+		// TODO: Is this valid?
+		return 1;
 	}
 
 }
