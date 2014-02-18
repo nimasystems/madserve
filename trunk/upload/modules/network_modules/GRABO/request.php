@@ -16,6 +16,25 @@ class GRABO implements networkmodule {
 		$http = new Http();
 		$http->initialize($httpConfig);
 
+		// temp
+		if ($request_type == 'interstitial') {
+			if ($request_info['main_device'] == 'IPAD') {
+				$zone_detail['zone_width'] = '768';
+				$zone_detail['zone_height'] = '1024';
+			} else {
+				$zone_detail['zone_width'] = '320';
+				$zone_detail['zone_height'] = '480';
+			}
+		} elseif ($request_type == 'banner') {
+			if ($request_info['main_device'] == 'IPAD') {
+				$zone_detail['zone_width'] = '600';
+				$zone_detail['zone_height'] = '50';
+			} else {
+				$zone_detail['zone_width'] = '320';
+				$zone_detail['zone_height'] = '50';
+			}
+		}
+		
 		$http->addParam('zone_type', $request_type);
 		$http->addParam('zone_size', $zone_detail['zone_width'] . 'x' . $zone_detail['zone_height']);
 		$http->addParam('zone_refresh_time', $zone_detail['zone_refresh']);
@@ -23,25 +42,6 @@ class GRABO implements networkmodule {
 		$http->addParam('zone_placement_id', $request_info['placement_hash']);
 
 		if ($request_type=='banner' || $request_type=='interstitial'){
-
-			// temp
-			if ($request_type == 'interstitial') {
-				if ($request_info['main_device'] == 'IPAD') {
-					$zone_detail['zone_width'] = '768';
-					$zone_detail['zone_height'] = '1024';
-				} else {
-					$zone_detail['zone_width'] = '320';
-					$zone_detail['zone_height'] = '480';
-				}
-			} elseif ($request_type == 'banner') {
-				if ($request_info['main_device'] == 'IPAD') {
-					$zone_detail['zone_width'] = '600';
-					$zone_detail['zone_height'] = '50';
-				} else {
-					$zone_detail['zone_width'] = '320';
-					$zone_detail['zone_height'] = '50';
-				}
-			}
 
 			// private vars!
 			//$http->addParam('p_carrier'   , $request_info['ip_address']);
