@@ -1,93 +1,105 @@
 <?php
 
 function prepare_click_url($input){
-$output = base64_decode(strtr($input, '-_,', '+/='));
-return $output;	
+	$output = base64_decode(strtr($input, '-_,', '+/='));
+	return $output;
 }
 
 function redirect($data){
-header ("Location: ".prepare_click_url($data['c'])."");	
+	
+	$r = null;
+	
+	if (isset($data['c']) && $data['c']) {
+		$r = base64_decode(strtr($data['c'], '-_,', '+/='));
+	} else {
+		$r = urldecode($data['gurl']);
+	}
+
+	if (!$r) {
+		return;
+	}
+	header ("Location: ". $r ."");
 }
 
 function track($data){
-	
-$cache_key='click_'.$data['h'].'';
-	
-if (MAD_TRACK_UNIQUE_CLICKS){
 
-$cache_result=get_cache($cache_key);
+	$cache_key='click_'.$data['h'].'';
 
-if ($cache_result && $cache_result==1){
-return false;
-}
-else {
-set_cache($cache_key, 1, 500);	
-}
+	if (MAD_TRACK_UNIQUE_CLICKS){
 
-}
+		$cache_result=get_cache($cache_key);
 
-if (!is_numeric($data['zone_id'])){
-return false;	
-}
-	
-/* Get the Publication */
-$query="SELECT publication_id FROM md_zones WHERE entry_id='".$data['zone_id']."'";
+		if ($cache_result && $cache_result==1){
+			return false;
+		}
+		else {
+			set_cache($cache_key, 1, 500);
+		}
 
-$zone_detail=simple_query_maindb($query, true, 1000);
+	}
 
-if (!$zone_detail or $zone_detail['publication_id']<1){
-return false;
-}
+	if (!is_numeric($data['zone_id'])){
+		return false;
+	}
 
-	
-switch($data['type']){
+	/* Get the Publication */
+	$query="SELECT publication_id FROM md_zones WHERE entry_id='".$data['zone_id']."'";
 
-case 'normal':
-reporting_db_update($zone_detail['publication_id'], $data['zone_id'], $data['campaign_id'], $data['ad_id'], '', 0, 0, 0, 1);
-break;
+	$zone_detail=simple_query_maindb($query, true, 1000);
 
-case 'network':
-reporting_db_update($zone_detail['publication_id'], $data['zone_id'], $data['campaign_id'], '', $data['network_id'], 0, 0, 0, 1);
-break;
+	if (!$zone_detail or $zone_detail['publication_id']<1){
+		return false;
+	}
 
-case 'backfill':
-reporting_db_update($zone_detail['publication_id'], $data['zone_id'], '', '', $data['network_id'], 0, 0, 0, 1);
-break;
 
-}
-	
+	switch($data['type']){
+
+		case 'normal':
+			reporting_db_update($zone_detail['publication_id'], $data['zone_id'], $data['campaign_id'], $data['ad_id'], '', 0, 0, 0, 1);
+			break;
+
+		case 'network':
+			reporting_db_update($zone_detail['publication_id'], $data['zone_id'], $data['campaign_id'], '', $data['network_id'], 0, 0, 0, 1);
+			break;
+
+		case 'backfill':
+			reporting_db_update($zone_detail['publication_id'], $data['zone_id'], '', '', $data['network_id'], 0, 0, 0, 1);
+			break;
+
+	}
+
 }
 
 function handle_click($data){
-	
-if (!isset($data['c']) or empty($data['c']) or !isset($data['type'])){
-exit;	
-}
 
-if (MAD_CLICK_IMMEDIATE_REDIRECT){
-ob_start();
-$size = ob_get_length();
+	if ((!isset($data['c']) && !isset($data['gurl'])) or (empty($data['c']) && empty($data['gurl'])) or !isset($data['type'])){
+		exit;
+	}
 
- // send headers to tell the browser to close the connection
-redirect($data);
-header("Content-Length: $size");
-header('Connection: close');
- 
-// flush all output
-ob_end_flush();
-ob_flush();
-flush();
+	if (MAD_CLICK_IMMEDIATE_REDIRECT){
+		ob_start();
+		$size = ob_get_length();
 
-track($data);
+		// send headers to tell the browser to close the connection
+		redirect($data);
+		header("Content-Length: $size");
+		header('Connection: close');
 
-}
+		// flush all output
+		ob_end_flush();
+		ob_flush();
+		flush();
 
-else {
-	
-track($data);
-redirect($data);
-	
-}
+		track($data);
+
+	}
+
+	else {
+
+		track($data);
+		redirect($data);
+
+	}
 
 
 }
