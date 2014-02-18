@@ -3,8 +3,10 @@ class GRABO implements networkmodule {
 	public function request($request_type, $request_info, $network_ids, $backfill) {
 
 		error_reporting(0);
-			
+
 		global $zone_detail;
+		global $display_ad;
+		global $request_settings;
 
 		$request_url = $request_type == 'banner' ? 'http://b.grabo.bg/mobile/_nimasystems/footer' :
 		'http://b.grabo.bg/mobile/_nimasystems/popup';
@@ -34,7 +36,7 @@ class GRABO implements networkmodule {
 				$zone_detail['zone_height'] = '50';
 			}
 		}
-		
+
 		$http->addParam('zone_type', $request_type);
 		$http->addParam('zone_size', $zone_detail['zone_width'] . 'x' . $zone_detail['zone_height']);
 		$http->addParam('zone_refresh_time', $zone_detail['zone_refresh']);
@@ -75,6 +77,35 @@ class GRABO implements networkmodule {
 			return false;
 		}
 
+		$banner_url = null;
+		$html_response = null;
+
+		if ($request_type=='banner') {
+			$html_response_ = @json_decode($http->result);
+
+			if (!$html_response_) {
+				return false;
+			}
+
+			$html_response_ = (array)$html_response_;
+				
+			$html_response = $html_response_['markup'];
+			$banner_url = $html_response_['url'];
+				
+			if (!$banner_url) {
+				return false;
+			}
+				
+			unset($html_response_);
+		} else {
+			$html_response = $http->result;
+		}
+
+		if (!$html_response) {
+			return false;
+		}
+		
+		/*
 		$metas = array(
 				'apple-mobile-web-app-capable' => 'yes',
 				'apple-mobile-web-app-status-bar-style' => 'black',
@@ -90,24 +121,42 @@ class GRABO implements networkmodule {
 
 		$m = implode("\n", $m);
 
-		$http->result = str_replace('<head>', '<head>' . "\n" . $m . "\n", $http->result);
-		$http->result = str_replace('href="//', 'href="http://', $http->result);
+		 $http->result = str_replace('<head>', '<head>' . "\n" . $m . "\n", $http->result);
+		$http->result = str_replace('href="//', 'href="http://', $http->result);*/
 
 		if ($request_type == 'banner') {
-			
+
 			$s = '320x480';
-			
-			if ($request_info['main_device'] == 'IPAD') { 
+
+			if ($request_info['main_device'] == 'IPAD') {
 				$s = '1024x768';
 			}
-			
-			$tempad['url'] = 'http://b.grabo.bg/mobile/_nimasystems/popup/?affid=18850&zone_size=' . $s;
+
+			//$tempad['url'] = 'http://b.grabo.bg/mobile/_nimasystems/popup/?affid=18850&zone_size=' . $s;
+			$tempad['url'] = $banner_url;
 			$tempad['type'] = 'banner';
-			$tempad['markup'] = $http->result;
+			$tempad['markup'] = $html_response;
 		} else {
+
+			$display_ad['main_type'] = 'display';
+			$request_settings['active_campaign_type'] = 'network';
+			$request_settings['active_campaign'] = 2;
+			$request_settings['network_id'] = 33;
+
+			prepare_ctr();
+
+			if (!isset($display_ad['final_click_url'])) {
+				return false;
+			}
+
+			$clk_url = $display_ad['final_click_url'] . "&gurl=";
+
+			$html_response = str_replace('?gurl=', '', $html_response);
+			$html_response = str_replace('[BASE_URL]', $clk_url, $html_response);
+			
 			$tempad['type'] = 'banner';
 			$tempad['interstitial-type'] = 'html';
-			$tempad['markup'] = $http->result; /*'http://b.grabo.bg' . $http->path;*/
+			$tempad['markup'] = $html_response; /*'http://b.grabo.bg' . $http->path;*/
 		}
 
 		if ($request_type=='banner'){
