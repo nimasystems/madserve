@@ -152,7 +152,7 @@ class GRABO implements networkmodule {
 				$ad=array();
 				$ad['main_type']='interstitial';
 				$ad['type']='interstitial';
-				$ad['animation']='fade-in';
+				$ad['animation']='None'; /*fade-in*/
 				/* Interstitial */
 				$ad['interstitial-orientation']='portrait';
 				$ad['interstitial-preload']=1;
@@ -160,7 +160,7 @@ class GRABO implements networkmodule {
 				$ad['interstitial-type']='markup';
 				$ad['interstitial-content']=$tempad['markup'];
 				$ad['interstitial-skipbutton-show']=1;
-				$ad['interstitial-skipbutton-showafter']=0;
+				$ad['interstitial-skipbutton-showafter']=3;
 				$ad['interstitial-navigation-show']=0;
 				$ad['interstitial-navigation-topbar-show']=0;
 				$ad['interstitial-navigation-bottombar-show']=0;
