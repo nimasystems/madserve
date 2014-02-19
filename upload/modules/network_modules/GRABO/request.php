@@ -14,7 +14,7 @@ class GRABO implements networkmodule {
 		$httpConfig['method']     = 'GET';
 		$httpConfig['timeout']    = 1;
 		$httpConfig['siteid']     = $network_ids['p_1'];
-			
+
 		$http = new Http();
 		$http->initialize($httpConfig);
 
