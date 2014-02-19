@@ -24,8 +24,8 @@ var_dump($c);
 	    document.cookie="expiration"+ "=" +escape(exdate.toGMTString())+
 	    ((expiredays==null) ? "" : ";expires="+exdate.toGMTString()+ "; path=/;"); 
 	}
-setCookie('testc', 'RRRR', 123);
-alert('set');
+//setCookie('testc', 'RRRR', 123);
+//alert('set');
 </script>
 </body>
 </html>
