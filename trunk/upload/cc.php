@@ -1,7 +1,7 @@
 <?php
 
 if (isset($_GET['f']) && $_GET['f'] == 1) {
-	setcookie('testfff', 'MAAARTIN', time() + 1024 * 60 * 60, '/', '.madserve.dev.bgmiracle.com');
+	setcookie('testfff', 'MAAARTIN', time() + 1024 * 60 * 60, '/', null);
 }
 
 
