@@ -18,10 +18,10 @@ var_dump($c);
 function setCookie(c_name, value, exdays) {
     var exdate = new Date();
     exdate.setDate(exdate.getDate() + exdays);
-    var c_value = escape(value) + ((exdays == null) ? "" : "; expires=" + exdate.toUTCString());
+    var c_value = escape(value) + ((exdays == null) ? "" : "; path=/; expires=" + exdate.toUTCString());
     document.cookie = c_name + "=" + c_value;
 }
-setCookie('testc', 'xxyyzz', 123);
+setCookie('testc', 'xxyyzzAAA', 123);
 alert('set');
 </script>
 </body>
