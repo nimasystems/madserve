@@ -3,7 +3,7 @@
 //setcookie('testc', '12345', time() + 1024 * 60 * 60, '/', '.madserve.dev.bgmiracle.com');
 
 
- $c = $_COOKIE;
+$c = $_COOKIE;
 
 var_dump($c);
 
@@ -15,13 +15,16 @@ var_dump($c);
 <head></head>
 <body>
 	<script type="text/javascript">
-function setCookie(c_name, value, exdays) {
-    var exdate = new Date();
-    exdate.setDate(exdate.getDate() + exdays);
-    var c_value = escape(value) + ((exdays == null) ? "" : "; path=/; expires=" + exdate.toUTCString());
-    document.cookie = c_name + "=" + c_value;
-}
-setCookie('testc', 'xxyyzzAAA', 123);
+	function setCookie(c_name,value,expiredays)
+	{
+	    var exdate=new Date();
+	    exdate.setDate(exdate.getDate()+expiredays);
+	    document.cookie=c_name+ "=" +escape(value)+
+	    ((expiredays==null) ? "" : ";expires="+exdate.toGMTString()+ "; path=/;"); 
+	    document.cookie="expiration"+ "=" +escape(exdate.toGMTString())+
+	    ((expiredays==null) ? "" : ";expires="+exdate.toGMTString()+ "; path=/;"); 
+	}
+setCookie('testc', 'RRRR', 123);
 alert('set');
 </script>
 </body>
