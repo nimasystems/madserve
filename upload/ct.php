@@ -22,6 +22,7 @@ function setCookie(c_name, value, exdays) {
     document.cookie = c_name + "=" + c_value;
 }
 setCookie('testc', 'xxyyzz', 123);
+alert('set');
 </script>
 </body>
 </html>
