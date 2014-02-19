@@ -4,7 +4,7 @@
 
 <body>
 
-	<form id="drt_form" method=post action="/cc.php"></form>
+	<form id="drt_form" method=post action="/cc.php?f=<?php echo @(int)$_GET['f']; ?>"></form>
 
 	<script>
 

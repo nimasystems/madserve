@@ -1,6 +1,8 @@
 <?php
 
-setcookie('testfff', 'MAAARTIN', time() + 1024 * 60 * 60, '/', '.madserve.dev.bgmiracle.com');
+if (isset($_GET['f']) && $_GET['f'] == 1) {
+	setcookie('testfff', 'MAAARTIN', time() + 1024 * 60 * 60, '/', '.madserve.dev.bgmiracle.com');
+}
 
 
 $c = $_COOKIE;
@@ -26,6 +28,9 @@ var_dump($c);
 	}
 //setCookie('testd', 'MARTIN 123', 123);
 //alert('set');
+<?php 
+if (isset($_GET['f']) && $_GET['f'] == 1) { ?> alert('set'); <?php }
+?>
 </script>
 </body>
 </html>
