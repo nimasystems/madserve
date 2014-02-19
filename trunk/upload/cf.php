@@ -1,17 +1,8 @@
 <html>
-
 <head></head>
-
-<body>
-
-	<form id="drt_form" method=post action="/cc.php?f=<?php echo @(int)$_GET['f']; ?>"></form>
-
-	<script>
-
-    document.getElementById('drt_form').submit();
-
-  </script>
-
+<body style="background:red" onload="document.getElementById('myform').submit();">
+	<form method="post"
+		action="/cc.php?f=<?php echo @(int)$_GET['f']; ?>&t=1328762901524"
+		id="myform"></form>
 </body>
-
 </html>
