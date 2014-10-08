@@ -100,7 +100,7 @@ static MP_MPStore *sharedStore = nil;
 	NSString *postBody = [NSString stringWithFormat:@"udid=%@&receipt=%@", 
 						  MP_MPAdvertisingIdentifier(),
 						  [receiptString URLEncodedString]];
-	NSString *msgLength = [NSString stringWithFormat:@"%d", [postBody length]];
+	NSString *msgLength = [NSString stringWithFormat:@"%ld", (long)[postBody length]];
 	[request addValue:msgLength forHTTPHeaderField:@"Content-Length"];
 	[request setHTTPMethod:@"POST"];
 	[request setHTTPBody:[postBody dataUsingEncoding:NSUTF8StringEncoding]];

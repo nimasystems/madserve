@@ -74,7 +74,7 @@ NSString * const k_kHTTPHeaderFieldUserAgent = @"User-Agent";
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
     if ([response respondsToSelector:@selector(statusCode)]) {
-        int statusCode = [(NSHTTPURLResponse *)response statusCode];
+        NSInteger statusCode = [(NSHTTPURLResponse *)response statusCode];
         if (statusCode >= 400) {
             [connection cancel];
             [self.delegate communicatorDidFailWithError:[self errorForStatusCode:statusCode]];

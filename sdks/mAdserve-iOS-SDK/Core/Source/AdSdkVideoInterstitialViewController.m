@@ -450,8 +450,8 @@ static float animationDuration = 0.50;
 	if (theRangeBeginning.location == NSNotFound) {
 		return nil;
 	}
-	int location = theRangeBeginning.location + theRangeBeginning.length;
-	int length = [localContents length] - location;
+	long location = theRangeBeginning.location + theRangeBeginning.length;
+	long length = [localContents length] - location;
 	NSRange theRangeToSearch = {location, length};
 	NSRange theRangeEnding = [localContents rangeOfString:endingString options:NSCaseInsensitiveSearch range:theRangeToSearch];
 	if (theRangeEnding.location == NSNotFound) {
@@ -2924,7 +2924,7 @@ static float animationDuration = 0.50;
             [self advertActionTrackingEvent:@"Midpoint"];
         }
         
-        int quartile = videoDuration/4;
+        int quartile = (int)videoDuration/4;
         if (timeToCheckAgainst == quartile) {
             [self advertActionTrackingEvent:@"firstquartile"];
         }

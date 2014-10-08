@@ -56,7 +56,7 @@ static NSString * const kAdAnimationId = @"MPAdTransition";
 
 + (void)initialize
 {
-	srandom(time(NULL));
+	srandom((unsigned)time(NULL));
 }
 
 - (id)initWithAdUnitId:(NSString *)adUnitId size:(CGSize)size 

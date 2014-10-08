@@ -15,7 +15,7 @@
 
     uint8_t digest[CC_SHA1_DIGEST_LENGTH];
 
-    CC_SHA1(data.bytes, data.length, digest);
+    CC_SHA1(data.bytes, (uint32_t)data.length, digest);
 
     NSMutableString* output = [NSMutableString stringWithCapacity:CC_SHA1_DIGEST_LENGTH * 2];
 
@@ -30,7 +30,7 @@
 {
     const char *cStr = [self UTF8String];
     unsigned char digest[16];
-    CC_MD5( cStr, strlen(cStr), digest );
+    CC_MD5( cStr, (uint32_t)strlen(cStr), digest );
 
     NSMutableString *output = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH * 2];
 
