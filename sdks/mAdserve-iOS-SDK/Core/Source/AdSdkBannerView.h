@@ -64,6 +64,7 @@ enum {
 @property (nonatomic, assign) BOOL    refreshTimerOff;
 
 @property (strong, nonatomic) NSString *requestURL;
+@property (nonatomic, strong) NSString *userAgent;
 
 @property (nonatomic, assign) BOOL allowDelegateAssigmentToRequestAd;
 

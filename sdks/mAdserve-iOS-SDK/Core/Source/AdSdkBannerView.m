@@ -16,6 +16,8 @@
 #import "MP_MPAdConfiguration.h"
 
 NSString * const AdSdkErrorDomain = @"AdSdk";
+static UIWebView *__adSDKBannerViewHiddenWebView = nil;
+static NSString *__adSDKBannerViewUA = nil;
 
 @interface AdSdkBannerView () <UIWebViewDelegate, MPAdapterDelegate> {
     int ddLogLevel;
@@ -23,7 +25,6 @@ NSString * const AdSdkErrorDomain = @"AdSdk";
 }
 
 @property (nonatomic, strong) NSString *demoAdTypeToShow;
-@property (nonatomic, strong) NSString *userAgent;
 @property (nonatomic, strong) NSString *skipOverlay;
 @property (nonatomic, strong) MP_MPMRAIDBannerAdapter *adapter;
 
@@ -39,11 +40,23 @@ NSString * const AdSdkErrorDomain = @"AdSdk";
 	RedirectChecker *redirectChecker;
 }
 
++ (NSString*)browserUserAgent {
+    if (__adSDKBannerViewUA) {
+        return __adSDKBannerViewUA;
+    }
+    
+    if (!__adSDKBannerViewHiddenWebView) {
+        __adSDKBannerViewHiddenWebView = [[UIWebView alloc] initWithFrame:CGRectZero];
+    }
+    
+    __adSDKBannerViewUA = [__adSDKBannerViewHiddenWebView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+    return __adSDKBannerViewUA;
+}
+
 - (void)setup
 {
-
-    UIWebView* webView = [[UIWebView alloc] initWithFrame:CGRectZero];
-    self.userAgent = [webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+    //UIWebView* webView = [[UIWebView alloc] initWithFrame:CGRectZero];
+    self.userAgent = @"";
 
     [self setUpBrowserUserAgentStrings];
     self.autoresizingMask = UIViewAutoresizingNone;
@@ -276,11 +289,14 @@ NSString * const AdSdkErrorDomain = @"AdSdk";
 
 - (NSString*)browserAgentString
 {
-
     NSString *osVersion = [UIDevice currentDevice].systemVersion;
     NSArray *agentStringArray = self.browserUserAgentDict[osVersion];
     NSMutableString *agentString = [NSMutableString stringWithString:self.userAgent];
 
+    if (!agentString) {
+        return @"";
+    }
+    
     NSRange range = [agentString rangeOfString:@"like Gecko)"];
 
     if (range.location != NSNotFound && range.length) {
